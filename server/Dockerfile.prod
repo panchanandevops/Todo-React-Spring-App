@@ -1,0 +1,36 @@
+# Stage 1: Build the application
+FROM maven:3.8.6-openjdk-18 AS builder
+
+LABEL version="1.0.0"
+
+ARG PROJECT_NAME="todo-api"
+ARG APP_HOME="/opt/deployment/"
+
+WORKDIR /app
+
+# Copy the pom.xml and download dependencies
+COPY pom.xml .
+RUN mvn dependency:go-offline -B
+
+# Copy the source code and build the application
+COPY src ./src
+RUN mvn package -DskipTests
+
+# Stage 2: Create the final image
+FROM openjdk:18-jdk
+
+LABEL version="1.0.0"
+
+ARG PROJECT_NAME="todo-api"
+ARG APP_HOME="/opt/deployment/"
+
+# Copy the jar from the builder stage
+RUN mkdir ${APP_HOME}
+COPY --from=builder /app/target/todo-1.0.0.jar ${APP_HOME}/todo-1.0.0.jar
+
+WORKDIR ${APP_HOME}
+
+EXPOSE 8080
+
+# Run application with java -jar
+ENTRYPOINT ["java", "-jar", "todo-1.0.0.jar"]
