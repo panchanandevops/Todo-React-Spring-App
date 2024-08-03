@@ -49,10 +49,12 @@ services:
     build:
       context: ./client
       dockerfile: Dockerfile.prod
-    image: panchanandevops/todo-react-ui:v1.0.0
+    image: panchanandevops/todo-react-ui:v2.0.0
     container_name: todo-ui
     ports:
       - 3000:80
+    environment:
+      - REACT_APP_BACKEND_SERVER_URL=http://localhost:8080
     networks:
       - frontend
     depends_on:
