@@ -1,0 +1,7 @@
+resources:
+  - 0-pv.yaml
+  - 1-namespace.yaml
+  - 2-pvc.yaml
+  - 3-secret.yaml
+  - 4-mongodb.yaml
+  - 5-api-deployment.yaml
