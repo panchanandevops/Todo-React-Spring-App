@@ -8,7 +8,7 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: https://github.com/panchanandevops/Next-Golang-CRUD-app.git
+    repoURL: https://github.com/panchanandevops/Todo-React-Spring-App.git
     targetRevision: HEAD
     path: Deploy/k8s/
   destination:
