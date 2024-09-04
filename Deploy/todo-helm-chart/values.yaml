@@ -23,8 +23,9 @@ uiDeployment:
 
 uiService:
   name: todo-ui-service
-  type: ClusterIP
+  type: NodePort
   port: 8000
+  nodePort: 32008
 
 apiDeployment:
   name: todo-api-deployment
