@@ -12,7 +12,7 @@ spec:
     targetRevision: main
     path: Deploy/todo-helm-chart/ # Path within the Git repository containing application manifests
     helm:
-      releaseName: spring-api
+      releaseName: todo-app
   destination:
     server: https://kubernetes.default.svc # Kubernetes cluster API server address
     namespace: dev
