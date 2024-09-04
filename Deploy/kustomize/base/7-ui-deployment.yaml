@@ -1,22 +1,22 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: nextapp-deployment
+  name: todo-ui-deployment
   namespace: dev
   labels:
-    app: nextapp
+    app: todo-app
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: nextapp
+      app: todo-app
   template:
     metadata:
       labels:
-        app: nextapp
+        app: todo-app
     spec:
       containers:
-        - name: nextapp
+        - name: todo-react-ui
           image: panchanandevops/todo-react-ui:v2.0.0
           ports:
             - containerPort: 80
@@ -35,13 +35,13 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: nextapp-service
+  name: todo-ui-service
   namespace: dev
   labels:
-    app: nextapp
+    app: todo-app
 spec:
   selector:
-    app: nextapp
+    app: todo-app
   ports:
     - protocol: TCP
       port: 8000

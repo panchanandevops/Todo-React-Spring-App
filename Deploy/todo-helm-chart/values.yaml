@@ -1,13 +1,32 @@
-commonLabel: todo-api
+commonLabel: todo-app
 
 namespace:
   name: dev
 
 extraLabels:
   environment: dev
-  team: backend
 
-deployment:
+ui-deployment:
+  name: todo-ui-deployment
+  replicas: 2
+  container:
+    name: todo-react-ui
+    port: 80
+    image: panchanandevops/todo-react-ui:v2.0.0
+    resources:
+      limits:
+        memory: "512Mi"
+        cpu: "500m"
+      requests:
+        memory: "256Mi"
+        cpu: "250m"
+
+uiService:
+  name: todo-ui-service
+  type: ClusterIP
+  port: 8000
+
+api-deployment:
   name: todo-api-deployment
   replicas: 2
   container:
