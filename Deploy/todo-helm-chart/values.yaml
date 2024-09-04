@@ -6,7 +6,7 @@ namespace:
 extraLabels:
   environment: dev
 
-ui-deployment:
+uiDeployment:
   name: todo-ui-deployment
   replicas: 2
   container:
@@ -26,7 +26,7 @@ uiService:
   type: ClusterIP
   port: 8000
 
-api-deployment:
+apiDeployment:
   name: todo-api-deployment
   replicas: 2
   container:

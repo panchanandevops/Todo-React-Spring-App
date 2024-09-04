@@ -1,12 +1,12 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ .Release.Name }}-{{ .Values.ui-deployment.name }}
+  name: {{ .Release.Name }}-{{ .Values.uiDeployment.name }}
   namespace: {{ .Values.namespace.name | default .Release.Namespace }}
   labels:
     {{- include "common.labels" . | nindent 4 }}
 spec:
-  replicas: {{ .Values.ui-deployment.replicas }}
+  replicas: {{ .Values.uiDeployment.replicas }}
   selector:
     matchLabels:
       {{- include "common.labels" . | nindent 6 }}
@@ -16,24 +16,21 @@ spec:
         {{- include "common.labels" . | nindent 8 }}
     spec:
       containers:
-        - name: {{ .Release.Name }}-{{ .Values.ui-deployment.container.name }}
-          image: {{ .Values.ui-deployment.container.image }}
+        - name: {{ .Release.Name }}-{{ .Values.uiDeployment.container.name }}
+          image: {{ .Values.uiDeployment.container.image }}
           imagePullPolicy: IfNotPresent
           ports:
-            - containerPort: {{ .Values.ui-deployment.container.port }}
+            - containerPort: {{ .Values.uiDeployment.container.port }}
           env:
-            - name: spring.data.mongodb.host
-              valueFrom:
-                secretKeyRef:
-                  name: {{ .Release.Name }}-{{ .Values.secret.name }}
-                  key: host
+            - name: REACT_APP_BACKEND_SERVER_URL
+              value: "http://{{ .Values.ingress.host }}:30452"
           resources:
             limits:
-              memory: {{ .Values.ui-deployment.container.resources.limits.memory }}
-              cpu: {{ .Values.ui-deployment.container.resources.limits.cpu }}
+              memory: {{ .Values.uiDeployment.container.resources.limits.memory }}
+              cpu: {{ .Values.uiDeployment.container.resources.limits.cpu }}
             requests:
-              memory: {{ .Values.ui-deployment.container.resources.requests.memory }}
-              cpu: {{ .Values.ui-deployment.container.resources.requests.cpu }}
+              memory: {{ .Values.uiDeployment.container.resources.requests.memory }}
+              cpu: {{ .Values.uiDeployment.container.resources.requests.cpu }}
 
 ---
 apiVersion: v1
@@ -48,7 +45,7 @@ spec:
   ports:
     - protocol: TCP
       port: {{ .Values.uiService.port }}
-      targetPort: {{ .Values.ui-deployment.container.port }}
+      targetPort: {{ .Values.uiDeployment.container.port }}
       {{- if eq .Values.uiService.type "NodePort" }}
       nodePort: {{ .Values.uiService.nodePort }}
       {{- end }}
