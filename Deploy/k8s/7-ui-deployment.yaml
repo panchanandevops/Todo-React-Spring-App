@@ -1,0 +1,49 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nextapp-deployment
+  namespace: dev
+  labels:
+    app: nextapp
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: nextapp
+  template:
+    metadata:
+      labels:
+        app: nextapp
+    spec:
+      containers:
+        - name: nextapp
+          image: panchanandevops/todo-react-ui:v2.0.0
+          ports:
+            - containerPort: 80
+          env:
+            - name: REACT_APP_BACKEND_SERVER_URL
+              value: "http://panchanandevops.com:30452"
+          resources:
+            requests:
+              memory: "256Mi"
+              cpu: "250m"
+            limits:
+              memory: "512Mi"
+              cpu: "500m"
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: nextapp-service
+  namespace: dev
+  labels:
+    app: nextapp
+spec:
+  selector:
+    app: nextapp
+  ports:
+    - protocol: TCP
+      port: 8000
+      targetPort: 80
+  type: ClusterIP
