@@ -8,7 +8,7 @@ extraLabels:
 
 uiDeployment:
   name: todo-ui-deployment
-  replicas: 2
+  replicas: 1
   container:
     name: todo-react-ui
     port: 80
