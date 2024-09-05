@@ -82,11 +82,11 @@ jobs:
         run: |
           sed -i "s|image: panchanandevops/todo-spring-api:.*|image: ${{ steps.meta.outputs.tags }}|g" Deploy/k8s/5-api-deployment.yaml
           sed -i "s|image: panchanandevops/todo-spring-api:.*|image: ${{ steps.meta.outputs.tags }}|g" Deploy/kustomize/base/5-api-deployment.yaml
-          sed -i "s|image: panchanandevops/todo-spring-api:.*|image: ${{ steps.meta.outputs.tags }}|g" Deploy/user-helm-chart/values.yaml
+          sed -i "s|image: panchanandevops/todo-spring-api:.*|image: ${{ steps.meta.outputs.tags }}|g" Deploy/todo-helm-chart/values.yaml
 
       - name: Commit changes
         run: |
-          git add Deploy/k8s/5-api-deployment.yaml Deploy/kustomize/base/5-api-deployment.yaml Deploy/user-helm-chart/values.yaml trivy-results.sarif 
+          git add Deploy/k8s/5-api-deployment.yaml Deploy/kustomize/base/5-api-deployment.yaml Deploy/todo-helm-chart/values.yaml trivy-results.sarif 
           git commit -m "Update tag in Deployment image tag and add Trivy scan results"
 
       - name: Create Pull Request
