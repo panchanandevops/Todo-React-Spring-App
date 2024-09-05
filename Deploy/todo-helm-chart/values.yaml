@@ -12,7 +12,7 @@ uiDeployment:
   container:
     name: todo-react-ui
     port: 80
-    image: panchanandevops/todo-react-ui:v2.0.0
+    image: panchanandevops/todo-react-ui:client-v0.0.1
     resources:
       limits:
         memory: "512Mi"
