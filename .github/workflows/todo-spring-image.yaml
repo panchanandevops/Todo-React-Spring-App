@@ -8,9 +8,9 @@ permissions:
 on:
   push:
     tags:
-      - "server-v*.*.*"   # Trigger on pushes of tags matching v1.0.0, v2.1.3, etc.
-    paths: 
-      - "server/**" 
+      - "server-v*.*.*" # Trigger on pushes of tags matching v1.0.0, v2.1.3, etc.
+    paths:
+      - "server/**"
 
 jobs:
   build-backend:
@@ -42,7 +42,7 @@ jobs:
         uses: docker/build-push-action@v6
         with:
           context: ./server
-          file: ./server/Dockerfile.prod 
+          file: ./server/Dockerfile.prod
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
@@ -59,6 +59,8 @@ jobs:
           severity: "HIGH,CRITICAL"
           format: "sarif"
           output: "trivy-results.sarif"
+        env:
+          TRIVY_CACHE_DIR: /tmp/trivy-cache # Use a temporary directory to avoid caching in .cache
 
       - name: Upload Trivy scan results to GitHub Security tab
         uses: github/codeql-action/upload-sarif@v3
