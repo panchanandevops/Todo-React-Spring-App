@@ -1,6 +1,6 @@
 {
   "version": "2.1.0",
-  "$schema": "https://raw.githubusercontent.com/oasis-tcs/sarif-spec/master/Schemata/sarif-schema-2.1.0.json",
+  "$schema": "https://raw.githubusercontent.com/oasis-tcs/sarif-spec/main/sarif-2.1/schema/sarif-schema-2.1.0.json",
   "runs": [
     {
       "tool": {
@@ -10,48 +10,21 @@
           "name": "Trivy",
           "rules": [
             {
-              "id": "CVE-2024-7264",
+              "id": "CVE-2024-8096",
               "name": "OsPackageVulnerability",
               "shortDescription": {
-                "text": "curl: libcurl: ASN.1 date parser overread"
+                "text": "curl: OCSP stapling bypass with GnuTLS"
               },
               "fullDescription": {
-                "text": "libcurl\u0026#39;s ASN1 parser code has the `GTime2str()` function, used for parsing an\nASN.1 Generalized Time field. If given an syntactically incorrect field, the\nparser might end up using -1 for the length of the *time fraction*, leading to\na `strlen()` getting performed on a pointer to a heap buffer area that is not\n(purposely) null terminated.\n\nThis flaw most likely leads to a crash, but can also lead to heap contents\ngetting returned to the application when\n[CURLINFO_CERTINFO](https://curl.se/libcurl/c/CURLINFO_CERTINFO.html) is used."
+                "text": "When curl is told to use the Certificate Status Request TLS extension, often referred to as OCSP stapling, to verify that the server certificate is valid, it might fail to detect some OCSP problems and instead wrongly consider the response as fine.  If the returned status reports another error than \u0026#39;revoked\u0026#39; (like for example \u0026#39;unauthorized\u0026#39;) it is not treated as a bad certficate."
               },
               "defaultConfiguration": {
                 "level": "warning"
               },
-              "helpUri": "https://avd.aquasec.com/nvd/cve-2024-7264",
+              "helpUri": "https://avd.aquasec.com/nvd/cve-2024-8096",
               "help": {
-                "text": "Vulnerability CVE-2024-7264\nSeverity: MEDIUM\nPackage: libcurl\nFixed Version: 8.9.1-r0\nLink: [CVE-2024-7264](https://avd.aquasec.com/nvd/cve-2024-7264)\nlibcurl's ASN1 parser code has the `GTime2str()` function, used for parsing an\nASN.1 Generalized Time field. If given an syntactically incorrect field, the\nparser might end up using -1 for the length of the *time fraction*, leading to\na `strlen()` getting performed on a pointer to a heap buffer area that is not\n(purposely) null terminated.\n\nThis flaw most likely leads to a crash, but can also lead to heap contents\ngetting returned to the application when\n[CURLINFO_CERTINFO](https://curl.se/libcurl/c/CURLINFO_CERTINFO.html) is used.",
-                "markdown": "**Vulnerability CVE-2024-7264**\n| Severity | Package | Fixed Version | Link |\n| --- | --- | --- | --- |\n|MEDIUM|libcurl|8.9.1-r0|[CVE-2024-7264](https://avd.aquasec.com/nvd/cve-2024-7264)|\n\nlibcurl's ASN1 parser code has the `GTime2str()` function, used for parsing an\nASN.1 Generalized Time field. If given an syntactically incorrect field, the\nparser might end up using -1 for the length of the *time fraction*, leading to\na `strlen()` getting performed on a pointer to a heap buffer area that is not\n(purposely) null terminated.\n\nThis flaw most likely leads to a crash, but can also lead to heap contents\ngetting returned to the application when\n[CURLINFO_CERTINFO](https://curl.se/libcurl/c/CURLINFO_CERTINFO.html) is used."
-              },
-              "properties": {
-                "precision": "very-high",
-                "security-severity": "6.5",
-                "tags": [
-                  "vulnerability",
-                  "security",
-                  "MEDIUM"
-                ]
-              }
-            },
-            {
-              "id": "CVE-2024-6119",
-              "name": "OsPackageVulnerability",
-              "shortDescription": {
-                "text": "openssl: Possible denial of service in X.509 name checks"
-              },
-              "fullDescription": {
-                "text": "Issue summary: Applications performing certificate name checks (e.g., TLS\nclients checking server certificates) may attempt to read an invalid memory\naddress resulting in abnormal termination of the application process.\n\nImpact summary: Abnormal termination of an application can a cause a denial of\nservice.\n\nApplications performing certificate name checks (e.g., TLS clients checking\nserver certificates) may attempt to read an invalid memory address when\ncomparing the expected name with an `otherName` subject alternative name of an\nX.509 certificate. This may result in an exception that terminates the\napplication program.\n\nNote that basic certificate chain validation (signatures, dates, ...) is not\naffected, the denial of service can occur only when the application also\nspecifies an expected DNS name, Email address or IP address.\n\nTLS servers rarely solicit client certificates, and even when they do, they\ngenerally don\u0026#39;t perform a name check against a reference identifier (expected\nidentity), but rather extract the presented identity after checking the\ncertificate chain.  So TLS servers are generally not affected and the severity\nof the issue is Moderate.\n\nThe FIPS modules in 3.3, 3.2, 3.1 and 3.0 are not affected by this issue."
-              },
-              "defaultConfiguration": {
-                "level": "warning"
-              },
-              "helpUri": "https://avd.aquasec.com/nvd/cve-2024-6119",
-              "help": {
-                "text": "Vulnerability CVE-2024-6119\nSeverity: MEDIUM\nPackage: libssl3\nFixed Version: 3.3.2-r0\nLink: [CVE-2024-6119](https://avd.aquasec.com/nvd/cve-2024-6119)\nIssue summary: Applications performing certificate name checks (e.g., TLS\nclients checking server certificates) may attempt to read an invalid memory\naddress resulting in abnormal termination of the application process.\n\nImpact summary: Abnormal termination of an application can a cause a denial of\nservice.\n\nApplications performing certificate name checks (e.g., TLS clients checking\nserver certificates) may attempt to read an invalid memory address when\ncomparing the expected name with an `otherName` subject alternative name of an\nX.509 certificate. This may result in an exception that terminates the\napplication program.\n\nNote that basic certificate chain validation (signatures, dates, ...) is not\naffected, the denial of service can occur only when the application also\nspecifies an expected DNS name, Email address or IP address.\n\nTLS servers rarely solicit client certificates, and even when they do, they\ngenerally don't perform a name check against a reference identifier (expected\nidentity), but rather extract the presented identity after checking the\ncertificate chain.  So TLS servers are generally not affected and the severity\nof the issue is Moderate.\n\nThe FIPS modules in 3.3, 3.2, 3.1 and 3.0 are not affected by this issue.",
-                "markdown": "**Vulnerability CVE-2024-6119**\n| Severity | Package | Fixed Version | Link |\n| --- | --- | --- | --- |\n|MEDIUM|libssl3|3.3.2-r0|[CVE-2024-6119](https://avd.aquasec.com/nvd/cve-2024-6119)|\n\nIssue summary: Applications performing certificate name checks (e.g., TLS\nclients checking server certificates) may attempt to read an invalid memory\naddress resulting in abnormal termination of the application process.\n\nImpact summary: Abnormal termination of an application can a cause a denial of\nservice.\n\nApplications performing certificate name checks (e.g., TLS clients checking\nserver certificates) may attempt to read an invalid memory address when\ncomparing the expected name with an `otherName` subject alternative name of an\nX.509 certificate. This may result in an exception that terminates the\napplication program.\n\nNote that basic certificate chain validation (signatures, dates, ...) is not\naffected, the denial of service can occur only when the application also\nspecifies an expected DNS name, Email address or IP address.\n\nTLS servers rarely solicit client certificates, and even when they do, they\ngenerally don't perform a name check against a reference identifier (expected\nidentity), but rather extract the presented identity after checking the\ncertificate chain.  So TLS servers are generally not affected and the severity\nof the issue is Moderate.\n\nThe FIPS modules in 3.3, 3.2, 3.1 and 3.0 are not affected by this issue."
+                "text": "Vulnerability CVE-2024-8096\nSeverity: MEDIUM\nPackage: libcurl\nFixed Version: 8.10.0-r0\nLink: [CVE-2024-8096](https://avd.aquasec.com/nvd/cve-2024-8096)\nWhen curl is told to use the Certificate Status Request TLS extension, often referred to as OCSP stapling, to verify that the server certificate is valid, it might fail to detect some OCSP problems and instead wrongly consider the response as fine.  If the returned status reports another error than 'revoked' (like for example 'unauthorized') it is not treated as a bad certficate.",
+                "markdown": "**Vulnerability CVE-2024-8096**\n| Severity | Package | Fixed Version | Link |\n| --- | --- | --- | --- |\n|MEDIUM|libcurl|8.10.0-r0|[CVE-2024-8096](https://avd.aquasec.com/nvd/cve-2024-8096)|\n\nWhen curl is told to use the Certificate Status Request TLS extension, often referred to as OCSP stapling, to verify that the server certificate is valid, it might fail to detect some OCSP problems and instead wrongly consider the response as fine.  If the returned status reports another error than 'revoked' (like for example 'unauthorized') it is not treated as a bad certficate."
               },
               "properties": {
                 "precision": "very-high",
@@ -62,18 +35,45 @@
                   "MEDIUM"
                 ]
               }
+            },
+            {
+              "id": "CVE-2024-9143",
+              "name": "OsPackageVulnerability",
+              "shortDescription": {
+                "text": "openssl: Low-level invalid GF(2^m) parameters lead to OOB memory access"
+              },
+              "fullDescription": {
+                "text": "Issue summary: Use of the low-level GF(2^m) elliptic curve APIs with untrusted\nexplicit values for the field polynomial can lead to out-of-bounds memory reads\nor writes.\n\nImpact summary: Out of bound memory writes can lead to an application crash or\neven a possibility of a remote code execution, however, in all the protocols\ninvolving Elliptic Curve Cryptography that we\u0026#39;re aware of, either only \u0026#34;named\ncurves\u0026#34; are supported, or, if explicit curve parameters are supported, they\nspecify an X9.62 encoding of binary (GF(2^m)) curves that can\u0026#39;t represent\nproblematic input values. Thus the likelihood of existence of a vulnerable\napplication is low.\n\nIn particular, the X9.62 encoding is used for ECC keys in X.509 certificates,\nso problematic inputs cannot occur in the context of processing X.509\ncertificates.  Any problematic use-cases would have to be using an \u0026#34;exotic\u0026#34;\ncurve encoding.\n\nThe affected APIs include: EC_GROUP_new_curve_GF2m(), EC_GROUP_new_from_params(),\nand various supporting BN_GF2m_*() functions.\n\nApplications working with \u0026#34;exotic\u0026#34; explicit binary (GF(2^m)) curve parameters,\nthat make it possible to represent invalid field polynomials with a zero\nconstant term, via the above or similar APIs, may terminate abruptly as a\nresult of reading or writing outside of array bounds.  Remote code execution\ncannot easily be ruled out.\n\nThe FIPS modules in 3.3, 3.2, 3.1 and 3.0 are not affected by this issue."
+              },
+              "defaultConfiguration": {
+                "level": "note"
+              },
+              "helpUri": "https://avd.aquasec.com/nvd/cve-2024-9143",
+              "help": {
+                "text": "Vulnerability CVE-2024-9143\nSeverity: LOW\nPackage: libssl3\nFixed Version: 3.3.2-r1\nLink: [CVE-2024-9143](https://avd.aquasec.com/nvd/cve-2024-9143)\nIssue summary: Use of the low-level GF(2^m) elliptic curve APIs with untrusted\nexplicit values for the field polynomial can lead to out-of-bounds memory reads\nor writes.\n\nImpact summary: Out of bound memory writes can lead to an application crash or\neven a possibility of a remote code execution, however, in all the protocols\ninvolving Elliptic Curve Cryptography that we're aware of, either only \"named\ncurves\" are supported, or, if explicit curve parameters are supported, they\nspecify an X9.62 encoding of binary (GF(2^m)) curves that can't represent\nproblematic input values. Thus the likelihood of existence of a vulnerable\napplication is low.\n\nIn particular, the X9.62 encoding is used for ECC keys in X.509 certificates,\nso problematic inputs cannot occur in the context of processing X.509\ncertificates.  Any problematic use-cases would have to be using an \"exotic\"\ncurve encoding.\n\nThe affected APIs include: EC_GROUP_new_curve_GF2m(), EC_GROUP_new_from_params(),\nand various supporting BN_GF2m_*() functions.\n\nApplications working with \"exotic\" explicit binary (GF(2^m)) curve parameters,\nthat make it possible to represent invalid field polynomials with a zero\nconstant term, via the above or similar APIs, may terminate abruptly as a\nresult of reading or writing outside of array bounds.  Remote code execution\ncannot easily be ruled out.\n\nThe FIPS modules in 3.3, 3.2, 3.1 and 3.0 are not affected by this issue.",
+                "markdown": "**Vulnerability CVE-2024-9143**\n| Severity | Package | Fixed Version | Link |\n| --- | --- | --- | --- |\n|LOW|libssl3|3.3.2-r1|[CVE-2024-9143](https://avd.aquasec.com/nvd/cve-2024-9143)|\n\nIssue summary: Use of the low-level GF(2^m) elliptic curve APIs with untrusted\nexplicit values for the field polynomial can lead to out-of-bounds memory reads\nor writes.\n\nImpact summary: Out of bound memory writes can lead to an application crash or\neven a possibility of a remote code execution, however, in all the protocols\ninvolving Elliptic Curve Cryptography that we're aware of, either only \"named\ncurves\" are supported, or, if explicit curve parameters are supported, they\nspecify an X9.62 encoding of binary (GF(2^m)) curves that can't represent\nproblematic input values. Thus the likelihood of existence of a vulnerable\napplication is low.\n\nIn particular, the X9.62 encoding is used for ECC keys in X.509 certificates,\nso problematic inputs cannot occur in the context of processing X.509\ncertificates.  Any problematic use-cases would have to be using an \"exotic\"\ncurve encoding.\n\nThe affected APIs include: EC_GROUP_new_curve_GF2m(), EC_GROUP_new_from_params(),\nand various supporting BN_GF2m_*() functions.\n\nApplications working with \"exotic\" explicit binary (GF(2^m)) curve parameters,\nthat make it possible to represent invalid field polynomials with a zero\nconstant term, via the above or similar APIs, may terminate abruptly as a\nresult of reading or writing outside of array bounds.  Remote code execution\ncannot easily be ruled out.\n\nThe FIPS modules in 3.3, 3.2, 3.1 and 3.0 are not affected by this issue."
+              },
+              "properties": {
+                "precision": "very-high",
+                "security-severity": "2.0",
+                "tags": [
+                  "vulnerability",
+                  "security",
+                  "LOW"
+                ]
+              }
             }
           ],
-          "version": "0.53.0"
+          "version": "0.56.1"
         }
       },
       "results": [
         {
-          "ruleId": "CVE-2024-7264",
+          "ruleId": "CVE-2024-8096",
           "ruleIndex": 0,
           "level": "warning",
           "message": {
-            "text": "Package: curl\nInstalled Version: 8.9.0-r0\nVulnerability CVE-2024-7264\nSeverity: MEDIUM\nFixed Version: 8.9.1-r0\nLink: [CVE-2024-7264](https://avd.aquasec.com/nvd/cve-2024-7264)"
+            "text": "Package: curl\nInstalled Version: 8.9.1-r1\nVulnerability CVE-2024-8096\nSeverity: MEDIUM\nFixed Version: 8.10.0-r0\nLink: [CVE-2024-8096](https://avd.aquasec.com/nvd/cve-2024-8096)"
           },
           "locations": [
             {
@@ -90,17 +90,17 @@
                 }
               },
               "message": {
-                "text": "panchanandevops/todo-react-ui: curl@8.9.0-r0"
+                "text": "panchanandevops/todo-react-ui: curl@8.9.1-r1"
               }
             }
           ]
         },
         {
-          "ruleId": "CVE-2024-6119",
+          "ruleId": "CVE-2024-9143",
           "ruleIndex": 1,
-          "level": "warning",
+          "level": "note",
           "message": {
-            "text": "Package: libcrypto3\nInstalled Version: 3.3.1-r3\nVulnerability CVE-2024-6119\nSeverity: MEDIUM\nFixed Version: 3.3.2-r0\nLink: [CVE-2024-6119](https://avd.aquasec.com/nvd/cve-2024-6119)"
+            "text": "Package: libcrypto3\nInstalled Version: 3.3.2-r0\nVulnerability CVE-2024-9143\nSeverity: LOW\nFixed Version: 3.3.2-r1\nLink: [CVE-2024-9143](https://avd.aquasec.com/nvd/cve-2024-9143)"
           },
           "locations": [
             {
@@ -117,17 +117,17 @@
                 }
               },
               "message": {
-                "text": "panchanandevops/todo-react-ui: libcrypto3@3.3.1-r3"
+                "text": "panchanandevops/todo-react-ui: libcrypto3@3.3.2-r0"
               }
             }
           ]
         },
         {
-          "ruleId": "CVE-2024-7264",
+          "ruleId": "CVE-2024-8096",
           "ruleIndex": 0,
           "level": "warning",
           "message": {
-            "text": "Package: libcurl\nInstalled Version: 8.9.0-r0\nVulnerability CVE-2024-7264\nSeverity: MEDIUM\nFixed Version: 8.9.1-r0\nLink: [CVE-2024-7264](https://avd.aquasec.com/nvd/cve-2024-7264)"
+            "text": "Package: libcurl\nInstalled Version: 8.9.1-r1\nVulnerability CVE-2024-8096\nSeverity: MEDIUM\nFixed Version: 8.10.0-r0\nLink: [CVE-2024-8096](https://avd.aquasec.com/nvd/cve-2024-8096)"
           },
           "locations": [
             {
@@ -144,17 +144,17 @@
                 }
               },
               "message": {
-                "text": "panchanandevops/todo-react-ui: libcurl@8.9.0-r0"
+                "text": "panchanandevops/todo-react-ui: libcurl@8.9.1-r1"
               }
             }
           ]
         },
         {
-          "ruleId": "CVE-2024-6119",
+          "ruleId": "CVE-2024-9143",
           "ruleIndex": 1,
-          "level": "warning",
+          "level": "note",
           "message": {
-            "text": "Package: libssl3\nInstalled Version: 3.3.1-r3\nVulnerability CVE-2024-6119\nSeverity: MEDIUM\nFixed Version: 3.3.2-r0\nLink: [CVE-2024-6119](https://avd.aquasec.com/nvd/cve-2024-6119)"
+            "text": "Package: libssl3\nInstalled Version: 3.3.2-r0\nVulnerability CVE-2024-9143\nSeverity: LOW\nFixed Version: 3.3.2-r1\nLink: [CVE-2024-9143](https://avd.aquasec.com/nvd/cve-2024-9143)"
           },
           "locations": [
             {
@@ -171,7 +171,7 @@
                 }
               },
               "message": {
-                "text": "panchanandevops/todo-react-ui: libssl3@3.3.1-r3"
+                "text": "panchanandevops/todo-react-ui: libssl3@3.3.2-r0"
               }
             }
           ]
@@ -184,13 +184,13 @@
         }
       },
       "properties": {
-        "imageID": "sha256:ac0e953c8f29c5b0c57e6367fd65d35e2d539f4c4e89a2813b0f941168d3c322",
-        "imageName": "panchanandevops/todo-react-ui:client-v0.0.1",
+        "imageID": "sha256:f87071c6294e140873523a3b38a87f9a1eb380c6fc1de5afb869801ac8d7dfc2",
+        "imageName": "panchanandevops/todo-react-ui:client-v0.0.3",
         "repoDigests": [
-          "panchanandevops/todo-react-ui@sha256:d787491e83bdff0075cb65ffad337980fb93bb534d22f7438305e41751858103"
+          "panchanandevops/todo-react-ui@sha256:33a6627dbba0c16b28ee041407039074a915b8abdb3f6df1efcb8cc4829720e1"
         ],
         "repoTags": [
-          "panchanandevops/todo-react-ui:client-v0.0.1"
+          "panchanandevops/todo-react-ui:client-v0.0.3"
         ]
       }
     }
