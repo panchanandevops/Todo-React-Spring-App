@@ -18,7 +18,7 @@ spec:
             pathType: Prefix
             backend:
               service:
-                name: {{ .Release.Name }}-{{ .Values.apiService.name }}
+                name: {{ .Release.Name }}-{{ .Values.uiService.name }}
                 port:
                   number: {{ .Values.uiService.port }}
 {{- end }}
