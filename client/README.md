@@ -1,1 +1,1 @@
-testing client-v0.0.2
+testing client-v0.0.3
