@@ -33,7 +33,7 @@ apiDeployment:
   container:
     name: todo-spring-api
     port: 8080
-    image: panchanandevops/todo-spring-api:server-v0.0.2
+    image: panchanandevops/todo-spring-api:server-v0.0.7
     resources:
       limits:
         memory: "512Mi"
