@@ -23,7 +23,7 @@ spec:
             - containerPort: {{ .Values.uiDeployment.container.port }}
           env:
             - name: REACT_APP_BACKEND_SERVER_URL
-              value: "http://{{ .Values.ingress.host }}:30452"
+              value: "http://{{ .Values.apiIngress.host }}"
           resources:
             limits:
               memory: {{ .Values.uiDeployment.container.resources.limits.memory }}

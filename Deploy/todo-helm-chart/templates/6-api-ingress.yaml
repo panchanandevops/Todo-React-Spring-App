@@ -2,16 +2,16 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: {{ .Release.Name }}-{{ .Values.ingress.name }}
+  name: {{ .Release.Name }}-{{ .Values.apiIngress.name }}
   namespace: {{ .Values.namespace.name | default .Release.Namespace }}
   labels:
     {{- include "common.labels" . | nindent 4 }}
   annotations:
     nginx.ingress.kubernetes.io/rewrite-target: /
 spec:
-  ingressClassName: {{ .Values.ingress.className }}
+  ingressClassName: {{ .Values.apiIngress.className }}
   rules:
-    - host: {{ .Values.ingress.host }}
+    - host: {{ .Values.apiIngress.host }}
       http:
         paths:
           - path: /
