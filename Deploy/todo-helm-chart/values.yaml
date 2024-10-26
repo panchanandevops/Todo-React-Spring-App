@@ -23,9 +23,8 @@ uiDeployment:
 
 uiService:
   name: todo-ui-service
-  type: NodePort
+  type: ClusterIP
   port: 8000
-  nodePort: 32008
 
 apiDeployment:
   name: todo-api-deployment
@@ -47,11 +46,17 @@ apiService:
   type: ClusterIP
   port: 3000
 
-ingress:
+apiIngress:
   enabled: true
   name: todo-api-ingress
   className: nginx
-  host: panchanandevops.com
+  host: todo-api.com
+
+uiIngress:
+  enabled: true
+  name: todo-ui-ingress
+  className: nginx
+  host: todo-ui.com
 
 secret:
   name: mongo-secret
@@ -78,8 +83,9 @@ dbService:
 pv:
   name: mongo-pv
   storage: 1Gi
-  local:
+  hostPath:
     path: /storage/data/todo/
+    type: DirectoryOrCreate
 
 pvc:
   name: mongo-pvc
