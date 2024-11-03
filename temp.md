@@ -1,3 +1,5 @@
+
+```Dockerfile
 # Stage 1: Build the application
 FROM maven:3.8.6-openjdk-18 AS builder
 
@@ -15,10 +17,9 @@ RUN mvn package -DskipTests
 FROM gcr.io/distroless/java17-debian12
 
 # Copy the jar from the builder stage
-COPY --from=builder --chown=1001:1001 /app/target/todo-1.0.0.jar /todo-1.0.0.jar
-USER 1001
-
+COPY --from=builder /app/target/todo-1.0.0.jar /todo-1.0.0.jar
 EXPOSE 8080
 
 # Run application with java -jar
 ENTRYPOINT ["java", "-jar", "/todo-1.0.0.jar"]
+```

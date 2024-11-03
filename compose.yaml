@@ -16,7 +16,7 @@ services:
     build:
       context: ./server
       dockerfile: Dockerfile.prod
-    image: panchanandevops/todo-spring-api:v3.0.0
+    image: panchanandevops/todo-spring-api:v5.0.0
     container_name: todo-api
     ports: 
       - 8080:8080
@@ -31,10 +31,10 @@ services:
     build:
       context: ./client
       dockerfile: Dockerfile.prod
-    image: panchanandevops/todo-react-ui:v2.0.0
+    image: panchanandevops/todo-react-ui:v5.0.0
     container_name: todo-ui
     ports:
-      - 3000:80
+      - 8000:80
     environment:
       - REACT_APP_BACKEND_SERVER_URL=http://localhost:8080
     networks:
